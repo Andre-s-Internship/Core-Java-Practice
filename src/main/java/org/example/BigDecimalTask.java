@@ -1,26 +1,27 @@
 package org.example;
 
 import java.math.BigDecimal;
-import java.text.DecimalFormat;
 import java.util.*;
 
 public class BigDecimalTask {
-    static Scanner sc = new Scanner(System.in);
-    public static void main(String[] args) {
-        System.out.println("Please enter the count of numbers");
-        int count = sc.nextInt();
-        System.out.println("Please enter numbers");
-        List<BigDecimal> bigDecimalList = new ArrayList<>();
 
-        for(int i = 0; i < count; i ++) {
-            bigDecimalList.add(new BigDecimal(sc.next()).negate());
+    static String sortBigDecimal(List<String> stringList) {
+        int count = stringList.size();
+        Map<String, BigDecimal> decimalToStringMap = new HashMap<>();
+
+        for (int i = 0; i < count; i++) {
+            String input = stringList.get(i);
+            BigDecimal decimal = new BigDecimal(input);
+            decimalToStringMap.put(input, decimal);
         }
-        Collections.sort(bigDecimalList);
-        Collections.reverse(bigDecimalList);
-        for (BigDecimal bigDecimal : bigDecimalList) {
-            //DecimalFormat decimalFormat = new DecimalFormat("###########.##########"); // Pattern to retain decimal places
-            //String formattedNumber = decimalFormat.format(bigDecimal);
-            System.out.println(bigDecimal.toPlainString());
+
+        List<Map.Entry<String, BigDecimal>> entryList = new ArrayList<>(decimalToStringMap.entrySet());
+        entryList.sort(Collections.reverseOrder(Map.Entry.comparingByValue()));
+
+        String result = "";
+        for (Map.Entry<String, BigDecimal> string : entryList) {
+            result += string.getKey() + '\n';
         }
+        return result;
     }
 }
